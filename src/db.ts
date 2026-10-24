@@ -1,9 +1,10 @@
-import { drizzle } from "drizzle-orm/neon-http";
-import {neon} from '@neondatabase/serverless';
-import * as schema from './schema/schema'
 import 'dotenv/config';
-const neon_sql = neon(process.env.DATABASE_URL!);
-const db = drizzle({client:neon_sql});
-export default db
+import { drizzle } from 'drizzle-orm/neon-http';
 
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is not defined in environment variables. Please check your .env file.');
+}
 
+const db = drizzle(process.env.DATABASE_URL);
+
+export default db;
